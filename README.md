@@ -1,4 +1,4 @@
-# compcat-batch-upload
+# cpdupload
 Python 3 library for batch upload from files
 
 ## Installation
