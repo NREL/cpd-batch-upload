@@ -18,7 +18,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'cpdupload'
-copyright = '2021, Alicia Key, Nalinrat Guba'
+copyright = '2021 NREL'
 author = 'Alicia Key, Nalinrat Guba'
 
 # The full version, including alpha/beta/rc tags
