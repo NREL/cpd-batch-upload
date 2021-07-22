@@ -20,7 +20,7 @@ def main() -> None:
     try:
         ingest = CsvIngest(args.csv)
         rows = ingest.load_csv()
-        print("stop here")
+        print(rows)
     except CsvIngestException as err:
         print(err)
 
