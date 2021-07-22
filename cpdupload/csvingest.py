@@ -55,7 +55,11 @@ class CsvIngest:
             for col, value in row.iteritems():
                 if not pd.isnull(value):
                     is_true_false = self.is_true_false(value)
-                    parsed_row[col] = is_true_false["value"] if is_true_false["is_true_false"] else value
+                    parsed_row[col] = (
+                        is_true_false["value"]
+                        if is_true_false["is_true_false"]
+                        else value
+                    )
             result.append(parsed_row)
         return result
 
