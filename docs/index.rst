@@ -7,4 +7,5 @@ Welcome to cpdupload's documentation!
 =====================================
 
 .. toctree::
-   doc_cpdupload_CsvIngest
+   doc_CsvIngest
+   doc_CsvIngestException
