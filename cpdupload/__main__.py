@@ -19,6 +19,8 @@ def main() -> None:
     print(f"Attempting to parse {args.csv}")
     try:
         ingest = CsvIngest(args.csv)
+        rows = ingest.load_csv()
+        print("stop here")
     except CsvIngestException as err:
         print(err)
 
