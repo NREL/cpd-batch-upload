@@ -21,5 +21,6 @@ setuptools.setup(
         "black",
         "sphinx",
         "pandas",
+        "sphinx-rtd-theme"
     ]
 )

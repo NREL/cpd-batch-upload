@@ -132,4 +132,5 @@ dmypy.json
 .DS_Store
 .idea/
 
-
+# Ignore Alicia's special build script
+check_and_build_docs.sh
