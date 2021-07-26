@@ -20,23 +20,17 @@ def store_key(d: Union[Dict, List], key_path: list, value: Any):
     head = key_path[0]
     tail = key_path[1:]
 
-    if len(tail) > 0 and head not in d:
-        if type(head) == int:
-            d[head] = [{}]
-            store_key(d[head][-1], tail, value)
+    if len(tail) > 0:
+        if type(tail[0]) == int:
+            if head not in d:
+                d[head] = [{}]
+            store_key(d[head][-1], tail[1:], value)
         else:
-            d[head] = {}
-            store_key(d[head], tail, value)
-    elif len(tail) > 0 and head in d:
-        if type(head) == int:
-            store_key(d[head][-1], tail, value)
-        else:
+            if head not in d:
+                d[head] = {}
             store_key(d[head], tail, value)
     else:
-        if type(d) == list:
-            d.append(value)
-        else:
-            d[head] = value
+        d[head] = value
 
 
 def parse_ints_out_of_key_path(key_path: List[str]) -> List[Union[str, int]]:
