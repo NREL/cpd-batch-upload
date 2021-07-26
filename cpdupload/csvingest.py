@@ -60,7 +60,8 @@ class CsvIngest:
                         if is_true_false["is_true_false"]
                         else value
                     )
-            result.append(parsed_row)
+            if len(parsed_row) > 0:
+                result.append(parsed_row)
         return result
 
     @staticmethod
