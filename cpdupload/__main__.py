@@ -16,17 +16,27 @@ def parse_arguments() -> argparse.Namespace:
     return args
 
 
-def store_key(d: Dict, key_path: list, value: Any):
+def store_key(d: Union[Dict, List], key_path: list, value: Any):
     head = key_path[0]
     tail = key_path[1:]
 
     if len(tail) > 0 and head not in d:
-        d[head] = {}
-        store_key(d[head], tail, value)
+        if type(head) == int:
+            d[head] = [{}]
+            store_key(d[head][-1], tail, value)
+        else:
+            d[head] = {}
+            store_key(d[head], tail, value)
     elif len(tail) > 0 and head in d:
-        store_key(d[head], tail, value)
+        if type(head) == int:
+            store_key(d[head][-1], tail, value)
+        else:
+            store_key(d[head], tail, value)
     else:
-        d[head] = value
+        if type(d) == list:
+            d.append(value)
+        else:
+            d[head] = value
 
 
 def parse_ints_out_of_key_path(key_path: List[str]) -> List[Union[str, int]]:
@@ -56,9 +66,10 @@ def main() -> None:
         for row in rows:
             top_dict = {}
             for key, value in row.items():
-                key_path = key.split(".")
+                key_path = parse_ints_out_of_key_path(key.split("."))
                 store_key(top_dict, key_path, value)
-            top_json = json.dumps(top_dict)
+                # print(key_path, value)
+            top_json = json.dumps(top_dict, indent=4)
             print(top_json)
     except CsvIngestException as err:
         print(err)
