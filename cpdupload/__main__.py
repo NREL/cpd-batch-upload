@@ -3,7 +3,7 @@ This is a basic implementation of a command prompt interface to upload CPD
 data.
 """
 
-from typing import Dict, Any
+from typing import Dict, Any, List, Union
 from cpdupload.csvingest import CsvIngest, CsvIngestException
 import argparse
 import json
@@ -27,6 +27,24 @@ def store_key(d: Dict, key_path: list, value: Any):
         store_key(d[head], tail, value)
     else:
         d[head] = value
+
+
+def parse_ints_out_of_key_path(key_path: List[str]) -> List[Union[str, int]]:
+    result: List[Union[str, int]] = []
+    for key in key_path:
+        if is_int(key):
+            result.append(int(key))
+        else:
+            result.append(key)
+    return result
+
+
+def is_int(value: Any) -> bool:
+    try:
+        int(value)
+        return True
+    except ValueError as e:
+        return False
 
 
 def main() -> None:
