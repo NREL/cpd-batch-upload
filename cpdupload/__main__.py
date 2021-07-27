@@ -21,13 +21,19 @@ def store_key(d: Union[Dict, List], key_path: list, value: Any):
     tail = key_path[1:]
 
     if len(tail) > 0:
-        if type(tail[0]) == int:
-            if head not in d:
-                d[head] = [{}]
+        if type(tail[0]) == int and head not in d:
+            d[head] = [{}]
             store_key(d[head][-1], tail[1:], value)
+        elif type(tail[0]) == int and head in d:
+            if len(d[head]) == tail[0] + 1:
+                store_key(d[head][-1], tail[1:], value)
+            else:
+                d[head].append({})
+                store_key(d[head][-1], tail[1:], value)
+        elif type(tail[0]) == str and head not in d:
+            d[head] = {}
+            store_key(d[head], tail, value)
         else:
-            if head not in d:
-                d[head] = {}
             store_key(d[head], tail, value)
     else:
         d[head] = value
