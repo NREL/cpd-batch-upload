@@ -16,25 +16,28 @@ def parse_arguments() -> argparse.Namespace:
     return args
 
 
-def store_key(d: Union[Dict, List], key_path: list, value: Any):
+def store_key(d: Union[Dict, List], key_path: list, value: Any, idx: int):
+    if len(key_path) < 1:
+        raise CsvIngestException(f"Duplicate column found on row {idx + 2} of csv. Value: {value}")
+
     head = key_path[0]
     tail = key_path[1:]
 
     if len(tail) > 0:
         if type(tail[0]) == int and head not in d:
             d[head] = [{}]
-            store_key(d[head][-1], tail[1:], value)
+            store_key(d[head][-1], tail[1:], value, idx)
         elif type(tail[0]) == int and head in d:
             if len(d[head]) == tail[0] + 1:
-                store_key(d[head][-1], tail[1:], value)
+                store_key(d[head][-1], tail[1:], value, idx)
             else:
                 d[head].append({})
-                store_key(d[head][-1], tail[1:], value)
+                store_key(d[head][-1], tail[1:], value, idx)
         elif type(tail[0]) == str and head not in d:
             d[head] = {}
-            store_key(d[head], tail, value)
+            store_key(d[head], tail, value, idx)
         else:
-            store_key(d[head], tail, value)
+            store_key(d[head], tail, value, idx)
     else:
         d[head] = value
 
@@ -63,12 +66,11 @@ def main() -> None:
     try:
         ingest = CsvIngest(args.csv)
         rows = ingest.load_csv()
-        for row in rows:
+        for idx, row in enumerate(rows):
             top_dict = {}
             for key, value in row.items():
                 key_path = parse_ints_out_of_key_path(key.split("."))
-                store_key(top_dict, key_path, value)
-                # print(key_path, value)
+                store_key(top_dict, key_path, value, idx)
             top_json = json.dumps(top_dict, indent=4)
             print(top_json)
     except CsvIngestException as err:
