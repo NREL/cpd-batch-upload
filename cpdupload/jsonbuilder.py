@@ -113,6 +113,20 @@ class JSONBuilder:
             d[head] = value
 
     def parse_ints_out_of_key_path(self, key_path: List[str]) -> List[Union[str, int]]:
+        """
+        parse_ints_out_of_key_path() parses a list of strings into a list of strings and
+        integers. This allows the store_key() method to nest lists inside dictionaries.
+
+        Parameters
+        ----------
+        key_path: List[str]
+            The list of keys for nested dictionaries.
+
+        Returns
+        -------
+        List[Union[str, int]]
+            A list of strings and integers to navigate a nested dictionary structure.
+        """
         result: List[Union[str, int]] = []
         for key in key_path:
             if self.is_int(key):
