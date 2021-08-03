@@ -101,7 +101,7 @@ class CsvIngest:
 
 class CsvIngestException(Exception):
     """
-    CsvIngestException is a custm exception class for errors that occur during
+    CsvIngestException is a custom exception class for errors that occur during
     the csv ingestion process. A custom Exception class allows fine-grained
     exception handling and better error messages for users.
     """
