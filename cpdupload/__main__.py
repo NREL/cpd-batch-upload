@@ -18,7 +18,9 @@ def parse_arguments() -> argparse.Namespace:
 
 def store_key(d: Union[Dict, List], key_path: list, value: Any, idx: int):
     if len(key_path) < 1:
-        raise CsvIngestException(f"Duplicate column found on row {idx + 2} of csv. Value: {value}")
+        raise CsvIngestException(
+            f"Duplicate column found on row {idx + 2} of csv. Value: {value}"
+        )
 
     head = key_path[0]
     tail = key_path[1:]
@@ -62,17 +64,15 @@ def is_int(value: Any) -> bool:
 
 def main() -> None:
     args = parse_arguments()
-    print(f"Attempting to parse {args.csv}")
     try:
         ingest = CsvIngest(args.csv)
-        rows = ingest.load_csv()
+        rows: List[Dict[str, Union[int, str, float]]] = ingest.load_csv()
         for idx, row in enumerate(rows):
-            top_dict = {}
+            top_dict: Dict[str, Any] = {}
             for key, value in row.items():
                 key_path = parse_ints_out_of_key_path(key.split("."))
                 store_key(top_dict, key_path, value, idx)
             top_json = json.dumps(top_dict, indent=4)
-            print(top_json)
     except CsvIngestException as err:
         print(err)
 
