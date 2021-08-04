@@ -168,7 +168,7 @@ class JSONBuilderException(Exception):
     def __init__(self, message: str):
         """
         __init__ calls the superclass __init__ to set up the custom message for
-        this CsvIngestException.
+        this JSONBuilderException.
 
         Parameters
         ----------

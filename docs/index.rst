@@ -10,3 +10,4 @@ Welcome to cpdupload's documentation!
    doc_CsvIngest
    doc_CsvIngestException
    doc_JSONBuilder
+   doc_JSONBuilderException
