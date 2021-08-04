@@ -9,3 +9,4 @@ Welcome to cpdupload's documentation!
 .. toctree::
    doc_CsvIngest
    doc_CsvIngestException
+   doc_JSONBuilder
