@@ -134,3 +134,7 @@ dmypy.json
 
 # Ignore Alicia's special build script
 check_and_build_docs.sh
+
+# Ignore intermediate csv and JSON files
+*.csv
+*.json
