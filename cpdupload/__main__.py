@@ -2,7 +2,7 @@
 This is a basic implementation of a command prompt interface to upload CPD
 data.
 """
-
+import json
 from typing import Dict, Any, List, Union
 from cpdupload.csvingest import CsvIngest, CsvIngestException
 from cpdupload.jsonbuilder import JSONBuilder, JSONBuilderException
@@ -23,7 +23,8 @@ def main() -> None:
         rows: List[Dict[str, Union[int, str, float]]] = ingest.load_csv()
         builder = JSONBuilder()
         top_json = builder.parse_rows(rows)
-        print("Stop here")
+        with open('output.json', 'w') as file:
+            file.write(json.dumps(top_json))
     except CsvIngestException as err:
         print(err)
 
