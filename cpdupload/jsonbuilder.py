@@ -99,11 +99,13 @@ class JSONBuilder:
                 d[head] = [{}]
                 self.store_key(d[head][-1], tail[1:], value, idx)
             elif type(tail[0]) == int and head in d:
-                if len(d[head]) == tail[0] + 1:
+                if type(d[head]) == list and len(d[head]) == tail[0] + 1:
                     self.store_key(d[head][-1], tail[1:], value, idx)
-                else:
+                elif type(d[head]) == list and len(d[head]) < tail[0] + 1:
                     d[head].append({})
                     self.store_key(d[head][-1], tail[1:], value, idx)
+                else:
+                    self.store_key(d[head], tail[1:], value, idx)
             elif type(tail[0]) == str and head not in d:
                 d[head] = {}
                 self.store_key(d[head], tail, value, idx)
