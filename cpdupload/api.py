@@ -72,7 +72,10 @@ class API:
         try:
             response = post(request_url, json_payload)
             if response.status_code != codes.ok:
-                raise APIException(f"adsorption_measurement/load failed with status {response.status_code} and response {response.text}")
+                raise APIException(
+                    f"adsorption_measurement/load failed with status {response.status_code} and response {response.text}"
+                )
+            return response.status_code
         except RequestException as err:
             raise APIException(f"adsorption_measurement/load failed because: {err}")
 
