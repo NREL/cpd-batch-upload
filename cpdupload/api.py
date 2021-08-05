@@ -1,4 +1,4 @@
-from requests import get, post, codes, RequestException
+from requests import get, post, codes, RequestException  # type: ignore
 
 
 class API:
@@ -36,10 +36,14 @@ class API:
         try:
             response = get(request_url)
             if response.status_code != codes.ok:
-                raise APIException(f"Health check failed. Received status code {response.status_code}")
+                raise APIException(
+                    f"Health check failed. Received status code {response.status_code}"
+                )
             return response.text
         except RequestException as e:
-            raise APIException(f"Health check failed. Could not connect to {request_url}")
+            raise APIException(
+                f"Health check failed. Could not connect to {request_url}"
+            )
 
 
 class APIException(Exception):

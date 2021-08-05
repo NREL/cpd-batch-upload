@@ -31,7 +31,7 @@ def main() -> None:
         builder = JSONBuilder()
         top_json = builder.parse_rows(rows)
         print("JSON build successful...")
-        with open('output.json', 'w') as file:
+        with open("output.json", "w") as file:
             file.write(json.dumps(top_json))
     except CsvIngestException as err:
         print(f"Error while parsing csv file: {err}")
