@@ -32,8 +32,9 @@ def main() -> None:
         top_json = builder.parse_rows(rows)
         print("JSON build successful...")
         api.adsorption_measurement_load(top_json)
-        with open("output.json", "w") as file:
-            file.write(json.dumps(top_json))
+        print("Upload to API successful!")
+        # with open("output.json", "w") as file:
+        #     file.write(json.dumps(top_json))
     except CsvIngestException as err:
         print(f"Error while parsing csv file: {err}")
     except JSONBuilderException as err:
