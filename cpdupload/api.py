@@ -1,3 +1,5 @@
+import json
+from typing import Dict, Any, List
 from requests import get, post, codes, RequestException  # type: ignore
 
 
@@ -15,7 +17,7 @@ class API:
         """
         self.url = url
 
-    def health_check(self) -> str:
+    def health_check(self) -> int:
         """
         health_check connects to the health_check API. It returns the response
         code if the request succeeds and raises an exception if the connection
@@ -23,8 +25,8 @@ class API:
 
         Returns
         -------
-        str
-            Returns the response body if the health check is successful
+        int
+            Returns the response status code.
 
         Raises
         ------
@@ -37,13 +39,42 @@ class API:
             response = get(request_url)
             if response.status_code != codes.ok:
                 raise APIException(
-                    f"Health check failed. Received status code {response.status_code}"
+                    f"API Health check failed. Received status code {response.status_code}"
                 )
-            return response.text
+            return response.status_code
         except RequestException as e:
             raise APIException(
-                f"Health check failed. Could not connect to {request_url}"
+                f"API Health check failed. Could not connect to {request_url}"
             )
+
+    def adsorption_measurement_load(self, payload: List[Dict[str, Any]]) -> int:
+        """
+        adsorption_measurement_load() attempts to load a JSON payload of an adsorption
+        measurement into the API.
+
+        Parameters
+        ----------
+        payload: Dict[str, Any]
+            The nested dictionary structure from which to create JSON.
+
+        Returns
+        -------
+        int
+            The status code of the successful request.
+
+        Raises
+        ------
+        APIException
+            Raises an API exception if any errors happen in the request or on the API.
+        """
+        request_url = f"{self.url}/adsorption_measurement/load"
+        json_payload = json.dumps(payload)
+        try:
+            response = post(request_url, json_payload)
+            if response.status_code != codes.ok:
+                raise APIException(f"adsorption_measurement/load failed with status {response.status_code} and response {response.text}")
+        except RequestException as err:
+            raise APIException(f"adsorption_measurement/load failed because: {err}")
 
 
 class APIException(Exception):
