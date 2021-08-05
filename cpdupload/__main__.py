@@ -31,6 +31,7 @@ def main() -> None:
         builder = JSONBuilder()
         top_json = builder.parse_rows(rows)
         print("JSON build successful...")
+        api.adsorption_measurement_load(top_json)
         with open("output.json", "w") as file:
             file.write(json.dumps(top_json))
     except CsvIngestException as err:
