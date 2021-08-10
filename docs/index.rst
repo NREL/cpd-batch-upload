@@ -7,6 +7,8 @@ Welcome to cpdupload's documentation!
 =====================================
 
 .. toctree::
+   doc_Loader
+   doc_LoaderException
    doc_CsvIngest
    doc_CsvIngestException
    doc_JSONBuilder

@@ -60,7 +60,7 @@ class Loader:
         """
         try:
             api = API(self.api)
-            
+
             if self.input_filename.endswith(".csv"):
                 ingest = CsvIngest(self.input_filename)
                 rows: List[Dict[str, Union[int, str, float]]] = ingest.load_csv()
