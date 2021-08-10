@@ -1,5 +1,10 @@
 import os
-from api import API, APIException
+import json
+from typing import Dict, List, Union
+
+from cpdupload.csvingest import CsvIngest, CsvIngestException
+from cpdupload.jsonbuilder import JSONBuilder, JSONBuilderException
+from cpdupload.api import API, APIException
 
 
 class Loader:
@@ -24,10 +29,13 @@ class Loader:
         Raises
         ------
         LoaderException
-            Raises a LoaderException if the filename is not found.
+            Raises a LoaderException if the filename is not found or the API health check
+            endpoint cannot be contacted.
         """
         if not os.path.isfile(input_filename):
-            raise LoaderException(f"Cannot import {input_filename} because the file was not found.")
+            raise LoaderException(
+                f"Cannot import {input_filename} because the file was not found."
+            )
 
         self.input_filename = input_filename
 
@@ -36,7 +44,42 @@ class Loader:
             api_check.health_check()
             self.api = api
         except APIException as e:
-            raise LoaderException(e)
+            raise LoaderException(str(e))
+
+    def send_adsorption_measurement_to_api(self):
+        """
+        send_file_to_api loads the file given, checks to see if it
+        is JSON or CSV, parses a CSV if necessary, and then sends the JSON payload
+        to the API.
+
+        Raises
+        ------
+        LoaderException
+            Raises an exception if something goes wrong with the file parsing or
+            upload to the API.
+        """
+        try:
+            api = API(self.api)
+            api.health_check()
+            print("API health check successful...")
+
+            if self.input_filename.endswith(".csv"):
+                ingest = CsvIngest(self.input_filename)
+                rows: List[Dict[str, Union[int, str, float]]] = ingest.load_csv()
+                builder = JSONBuilder()
+                json_for_upload = builder.parse_rows(rows)
+            else:
+                with open(self.input_filename, "r") as file:
+                    json_for_upload = json.loads(file.read())
+
+            api.adsorption_measurement_load(json_for_upload)
+
+        except CsvIngestException as err:
+            raise LoaderException(f"Error while parsing CSV file: {err}")
+        except JSONBuilderException as err:
+            raise LoaderException(f"Error while building the JSON: {err}")
+        except APIException as err:
+            raise LoaderException(f"Error connecting to the CKAN API: {err}")
 
 
 class LoaderException(Exception):
@@ -73,35 +116,3 @@ class LoaderException(Exception):
             An error message useful to an end user.
         """
         super(LoaderException, self).__init__(message)
-
-
-# def main() -> None:
-#     args = parse_arguments()
-#     try:
-#         api = API(args.api)
-#         api.health_check()
-#         print("API health check successful...")
-#
-#         if args.input.endswith(".csv"):
-#             ingest = CsvIngest(args.input)
-#             print("CSV parse successful...")
-#             rows: List[Dict[str, Union[int, str, float]]] = ingest.load_csv()
-#             builder = JSONBuilder()
-#             json_for_upload = builder.parse_rows(rows)
-#             print("JSON build successful...")
-#             with open("output.json", "w") as file:
-#                 file.write(json.dumps(json_for_upload))
-#         else:
-#             with open(args.input, "r") as file:
-#                 json_for_upload = json.loads(file.read())
-#             print("JSON file read successfully...")
-#
-#         api.adsorption_measurement_load(json_for_upload)
-#         print("Upload to API successful!")
-#
-#     except CsvIngestException as err:
-#         print(f"Error while parsing csv file: {err}")
-#     except JSONBuilderException as err:
-#         print(f"Error while building the JSON: {err}")
-#     except APIException as err:
-#         print(f"Error connecting to the CKAN API: {err}")
