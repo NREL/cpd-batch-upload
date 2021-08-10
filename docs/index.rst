@@ -6,15 +6,14 @@
 Welcome to cpdupload's documentation!
 =====================================
 
+The following pages document the classes in the cpdupload modules. A basic uploader is in the `__main__` module of the cpdupload package. Look in that module for simple guide on uploading adsorption measurement data from a file into the API.
+
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   doc_Loader
+   doc_LoaderException
+   doc_CsvIngest
+   doc_CsvIngestException
+   doc_JSONBuilder
+   doc_JSONBuilderException
+   doc_API
+   doc_APIException
