@@ -83,7 +83,7 @@ class API:
 class APIException(Exception):
     """
     APIException is a custom exception class for errors that occur during
-    the csv ingestion process. A custom Exception class allows fine-grained
+    the API connection process. A custom Exception class allows fine-grained
     exception handling and better error messages for users.
     """
 
