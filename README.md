@@ -8,18 +8,28 @@ This installation assumes you are using `conda` to create virtual environments.
 From the command prompt with the folder of your cloned repository, execute the following commands (these only need to be ran once at installation time):
 
 ```
-conda create -n cpdupload python=3.8
+conda create -n cpdupload python=3.9
 conda activate cpdupload
 pip install -e .
 ```
 
 ## Running the package
 
-From the root of the repo, type a command similar to the following. This will execute the costgraph. Note that the paths to the files will need to be changed for your particular folder structure.
+```
+python -m cpdupload --input [CSV or JSON input filename] --api [base URL of CPD API]
+```
 
+## Building the documentation
+
+First, there is a lot of documentation in docstrings throughout the `cpdupload` package. Second, this documentation is gathered into an easily navigable form with the Sphinx documentation builder. You can build the `.html` files for the documentation with the following commands from the root of the repo on macOS
+
+``` 
+cd docs
+make clean
+make html
 ```
-python -m cpdupload
-```
+
+After those commands finish you can open the documentation in the `docs/_build/html/index.html` file.
 
 ## Guide for development
 
