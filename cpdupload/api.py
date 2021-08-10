@@ -39,7 +39,7 @@ class API:
             response = get(request_url)
             if response.status_code != codes.ok:
                 raise APIException(
-                    f"API Health check failed. Received status code {response.status_code}"
+                    f"API health check failed. Received status code {response.status_code}"
                 )
             return response.status_code
         except RequestException as e:
