@@ -67,6 +67,7 @@ class Loader:
                 builder = JSONBuilder()
                 json_for_upload = builder.parse_rows(rows)
             else:
+                # Attempt to parse as JSON, throw errors for others
                 with open(self.input_filename, "r") as file:
                     json_for_upload = json.loads(file.read())
 
@@ -77,7 +78,7 @@ class Loader:
         except JSONBuilderException as err:
             raise LoaderException(f"Error while building the JSON: {err}")
         except APIException as err:
-            raise LoaderException(f"Error connecting to the CKAN API: {err}")
+            raise LoaderException(f"Error connecting to the CPD API: {err}")
 
 
 class LoaderException(Exception):
