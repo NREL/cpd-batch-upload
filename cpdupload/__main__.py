@@ -4,8 +4,11 @@ data.
 """
 
 import argparse
+import logging
 from cpdupload.loader import Loader, LoaderException
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 try:
     # Parse command line arguments
