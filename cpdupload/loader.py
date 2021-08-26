@@ -1,5 +1,6 @@
 import os
 import json
+import logging
 from typing import Dict, List, Union
 
 from cpdupload.csvingest import CsvIngest, CsvIngestException
@@ -38,6 +39,7 @@ class Loader:
             )
 
         self.input_filename = input_filename
+        self.logger = logging.getLogger(__name__)
 
         try:
             api_check = API(api)
@@ -62,16 +64,20 @@ class Loader:
             api = API(self.api)
 
             if self.input_filename.endswith(".csv"):
+                self.logger.info(f"Loading {self.input_filename} as a CSV.")
                 ingest = CsvIngest(self.input_filename)
                 rows: List[Dict[str, Union[int, str, float]]] = ingest.load_csv()
+                self.logger.info(f"Attempting to build JSON from {len(rows)} CSV row(s).")
                 builder = JSONBuilder()
                 json_for_upload = builder.parse_rows(rows)
             else:
                 # Attempt to parse as JSON, throw errors for others
+                self.logger.info(f"Loading {self.input_filename} as a JSON.")
                 with open(self.input_filename, "r") as file:
                     json_for_upload = json.loads(file.read())
 
-            api.adsorption_measurement_load(json_for_upload)
+            # api.adsorption_measurement_load(json_for_upload)
+            print("Skipping upload")
 
         except CsvIngestException as err:
             raise LoaderException(f"Error while parsing CSV file: {err}")
