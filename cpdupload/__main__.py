@@ -15,7 +15,7 @@ try:
     parser.add_argument(
         "--input", help="file to import, .csv or .json format", required=True
     )
-    parser.add_argument("--api", help="URL to API.", required=True)
+    parser.add_argument("--host_url", help="URL to API.", required=True)
     parser.add_argument(
         "--verbose",
         help="If specified, script will display verbose output during operation.",
@@ -27,7 +27,7 @@ try:
         logging.basicConfig(level=logging.INFO)
 
     # Create a loader which wraps file reading, parsing, and API connection functionality
-    loader = Loader(input_filename=args.input, api=args.api)
+    loader = Loader(input_filename=args.input, api=args.host_url)
 
     # Send the parsed file to the API
     loader.send_adsorption_measurement_to_api()
