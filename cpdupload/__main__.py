@@ -7,15 +7,24 @@ import argparse
 import logging
 from cpdupload.loader import Loader, LoaderException
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 try:
     # Parse command line arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument("--input", help="file to import, .csv or .json format")
-    parser.add_argument("--api", help="URL to API.")
+    parser.add_argument(
+        "--input", help="file to import, .csv or .json format", required=True
+    )
+    parser.add_argument("--api", help="URL to API.", required=True)
+    parser.add_argument(
+        "--verbose",
+        help="If specified, script will display verbose output during operation.",
+        action=argparse.BooleanOptionalAction,
+    )
     args = parser.parse_args()
+
+    if args.verbose:
+        logging.basicConfig(level=logging.INFO)
 
     # Create a loader which wraps file reading, parsing, and API connection functionality
     loader = Loader(input_filename=args.input, api=args.api)

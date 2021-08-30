@@ -39,7 +39,7 @@ class API:
         request_url = f"{self.url}"
         try:
             response = get(request_url)
-            self.logger.info(f'Health check request to {request_url} succeeded.')
+            self.logger.info(f"Health check request to {request_url} succeeded.")
             if response.status_code != codes.ok:
                 raise APIException(
                     f"API health check failed. Received status code {response.status_code}"
@@ -73,9 +73,11 @@ class API:
         request_url = f"{self.url}/adsorption_measurement/load"
         json_payload = json.dumps(payload)
         try:
-            self.logger.info(f'Attempting to post JSON to {request_url}.')
+            self.logger.info(f"Attempting to post JSON to {request_url}.")
             response = post(request_url, json_payload)
-            self.logger.info(f'Posting JSON to API at {request_url} resulted in status code {response.status_code}.')
+            self.logger.info(
+                f"Posting JSON to API at {request_url} resulted in status code {response.status_code}."
+            )
             if response.status_code != codes.ok:
                 raise APIException(
                     f"adsorption_measurement/load failed with status {response.status_code} and response {response.text}"

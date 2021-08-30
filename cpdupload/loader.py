@@ -67,7 +67,9 @@ class Loader:
                 self.logger.info(f"Loading {self.input_filename} as a CSV.")
                 ingest = CsvIngest(self.input_filename)
                 rows: List[Dict[str, Union[int, str, float]]] = ingest.load_csv()
-                self.logger.info(f"Attempting to build JSON from {len(rows)} CSV row(s).")
+                self.logger.info(
+                    f"Attempting to build JSON from {len(rows)} CSV row(s)."
+                )
                 builder = JSONBuilder()
                 json_for_upload = builder.parse_rows(rows)
             else:
@@ -76,8 +78,7 @@ class Loader:
                 with open(self.input_filename, "r") as file:
                     json_for_upload = json.loads(file.read())
 
-            # api.adsorption_measurement_load(json_for_upload)
-            print("Skipping upload")
+            api.adsorption_measurement_load(json_for_upload)
 
         except CsvIngestException as err:
             raise LoaderException(f"Error while parsing CSV file: {err}")
