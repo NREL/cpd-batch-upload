@@ -9,12 +9,15 @@ class API:
     The API class contains the logic to connect to the CPD API.
     """
 
-    def __init__(self, url: str):
+    def __init__(self, url: str, token: str):
         """
         Parameters
         ----------
         url: str
             The base URL of the API.
+
+        token: str
+            Bearer token to use for authentication.
         """
         self.url = url
         self.logger = logging.getLogger(__name__)
