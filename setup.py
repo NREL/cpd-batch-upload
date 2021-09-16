@@ -21,6 +21,7 @@ setuptools.setup(
         "black",
         "sphinx",
         "pandas",
-        "sphinx-rtd-theme"
+        "sphinx-rtd-theme",
+        "boto3"
     ]
 )
