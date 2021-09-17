@@ -22,6 +22,7 @@ setuptools.setup(
         "sphinx",
         "pandas",
         "sphinx-rtd-theme",
-        "boto3"
+        "boto3",
+        "warrant"
     ]
 )

@@ -2,6 +2,7 @@ import logging
 import getpass
 import os
 
+from warrant import AWSSRP
 import boto3
 
 
@@ -17,22 +18,12 @@ class Authentication:
         self.password = getpass.getpass()
 
     def authenticate_and_get_token(self) -> str:
+        self.logger.info(f"Pool: {self.pool_id} client: {self.client_id} user: {self.username}")
         client = boto3.client('cognito-idp')
-
-        try:
-            resp = client.initiate_auth(
-                ClientId=self.client_id,
-                AuthFlow="USER_PASSWORD_AUTH",
-                AuthParameters={
-                    "USERNAME": self.username,
-                    "PASSWORD": self.password
-                }
-            )
-        except Exception as e:
-            raise AuthenticationException(f"User authentication failed. {e}")
-
-        self.logger.info(f"Authentication for user {self.username} was successful.")
-        return resp['AuthenticationResult']['AccessToken']
+        aws = AWSSRP(username=self.username, password=self.password, pool_id=self.pool_id,
+                     client_id=self.client_id, client=client)
+        tokens = aws.authenticate_user()
+        return tokens
 
 
 class AuthenticationException(Exception):
@@ -41,10 +32,11 @@ class AuthenticationException(Exception):
 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
     client_id = os.environ.get("COGNITO_CLIENT_ID", "")
     pool_id = os.environ.get("COGNITO_POOL_ID", "")
     username = os.environ.get("COGNITO_USERNAME", "")
     auth = Authentication(client_id, pool_id, username)
     auth.prompt_password()
-    token = auth.authenticate_and_get_token()
-    print(token)
+    tokens = auth.authenticate_and_get_token()
+    print(tokens)
