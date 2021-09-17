@@ -20,6 +20,7 @@ class API:
             Bearer token to use for authentication.
         """
         self.url = url
+        self.token = token
         self.logger = logging.getLogger(__name__)
 
     def health_check(self) -> int:
@@ -77,7 +78,10 @@ class API:
         json_payload = json.dumps(payload)
         try:
             self.logger.info(f"Attempting to post JSON to {request_url}.")
-            response = post(request_url, json_payload)
+            headers = {
+                "Authorization": f"Bearer {self.token}"
+            }
+            response = post(request_url, data=json_payload, headers=headers)
             self.logger.info(
                 f"Posting JSON to API at {request_url} resulted in status code {response.status_code}."
             )

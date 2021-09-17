@@ -22,7 +22,8 @@ try:
         help="If specified, script will display verbose output during operation.",
         action=argparse.BooleanOptionalAction,
     )
-    parser.add_argument("--clientid", help="Client ID for API authentication", required=True)
+    parser.add_argument("--clientid", help="Client id for API authentication", required=True)
+    parser.add_argument("--poolid", help="Pool id for API authentication", required=True)
     parser.add_argument("--username", help="Username for API authentication", required=True)
     args = parser.parse_args()
 
@@ -31,7 +32,7 @@ try:
         logging.basicConfig(level=logging.INFO)
 
     # Setup authentication
-    auth = Authentication(args.clientid, args.username)
+    auth = Authentication(args.clientid, args.poolid, args.username)
     auth.prompt_password()
     token = auth.authenticate_and_get_token()
 
