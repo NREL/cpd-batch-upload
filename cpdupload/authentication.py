@@ -20,10 +20,15 @@ class Authentication:
     def authenticate_and_get_token(self) -> str:
         self.logger.info(f"Pool: {self.pool_id} client: {self.client_id} user: {self.username}")
         client = boto3.client('cognito-idp')
-        aws = AWSSRP(username=self.username, password=self.password, pool_id=self.pool_id,
-                     client_id=self.client_id, client=client)
-        tokens = aws.authenticate_user()
-        return tokens
+
+        try:
+            aws = AWSSRP(username=self.username, password=self.password, pool_id=self.pool_id,
+                         client_id=self.client_id, client=client)
+            tokens = aws.authenticate_user()
+            access_token = tokens["AuthenticationResult"]["AccessToken"]
+            return access_token
+        except Exception as err:
+            raise AuthenticationException(f"Could not authenticate user because: {err}")
 
 
 class AuthenticationException(Exception):
