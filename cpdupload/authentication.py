@@ -25,7 +25,7 @@ class Authentication:
             aws = AWSSRP(username=self.username, password=self.password, pool_id=self.pool_id,
                          client_id=self.client_id, client=client)
             tokens = aws.authenticate_user()
-            access_token = tokens["AuthenticationResult"]["AccessToken"]
+            access_token = tokens["AuthenticationResult"]["IdToken"]
             return access_token
         except Exception as err:
             raise AuthenticationException(f"Could not authenticate user because: {err}")
