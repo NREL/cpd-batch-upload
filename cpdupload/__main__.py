@@ -5,7 +5,7 @@ data.
 
 import argparse
 import logging
-import yaml
+import yaml  # type: ignore
 from cpdupload.loader import Loader, LoaderException
 from cpdupload.authentication import Authentication, AuthenticationException
 
