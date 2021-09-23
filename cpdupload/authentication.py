@@ -48,12 +48,19 @@ class Authentication:
         AuthenticationException
             Raises an exception if the authentication fails.
         """
-        self.logger.info(f"Pool: {self.pool_id} client: {self.client_id} user: {self.username}")
-        client = boto3.client('cognito-idp')
+        self.logger.info(
+            f"Pool: {self.pool_id} client: {self.client_id} user: {self.username}"
+        )
+        client = boto3.client("cognito-idp")
 
         try:
-            aws = AWSSRP(username=self.username, password=self.password, pool_id=self.pool_id,
-                         client_id=self.client_id, client=client)
+            aws = AWSSRP(
+                username=self.username,
+                password=self.password,
+                pool_id=self.pool_id,
+                client_id=self.client_id,
+                client=client,
+            )
             tokens = aws.authenticate_user()
             access_token = tokens["AuthenticationResult"]["IdToken"]
             return access_token
