@@ -140,6 +140,5 @@ check_and_build_docs.sh
 *.json
 
 # Ignore development and stage config files
-config.yaml
 config_dev.yaml
 config_stage.yaml
