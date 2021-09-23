@@ -78,9 +78,7 @@ class API:
         json_payload = json.dumps(payload)
         try:
             self.logger.info(f"Attempting to post JSON to {request_url}.")
-            headers = {
-                "Authorization": f"Bearer {self.token}"
-            }
+            headers = {"Authorization": f"Bearer {self.token}"}
             response = post(request_url, data=json_payload, headers=headers)
             self.logger.info(
                 f"Posting JSON to API at {request_url} resulted in status code {response.status_code}."
