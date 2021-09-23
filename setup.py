@@ -23,6 +23,7 @@ setuptools.setup(
         "pandas",
         "sphinx-rtd-theme",
         "boto3",
-        "warrant"
+        "warrant",
+        "PyYAML"
     ]
 )
