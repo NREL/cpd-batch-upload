@@ -138,3 +138,6 @@ check_and_build_docs.sh
 # Ignore intermediate csv and JSON files
 *.csv
 *.json
+
+# Ignore config files
+config.yaml
