@@ -139,6 +139,6 @@ check_and_build_docs.sh
 *.csv
 *.json
 
-# Ignore configuration files
+# Ignore development and stage config files
 config_dev.yaml
 config_stage.yaml

@@ -1,0 +1,6 @@
+cognito:
+  pool_id: us-west-2_hACAciBXa
+  client_id: 6vjdr0esvmtfvsp2rul691h28i
+
+api:
+  host_url: https://api.emn.nrelcloud.org/cpd/
