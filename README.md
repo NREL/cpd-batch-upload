@@ -15,9 +15,24 @@ pip install -e .
 
 ## Running the package
 
+### Example command line
+
+After installation, you can run a command similar to the following:
+
 ```
-python -m cpdupload --input [CSV or JSON input filename] --api [base URL of CPD API]
+python -m cpdupload --verbose --config config.yaml --username [your username] --input [json or csv filename]
 ```
+
+After typing the command, you will be prompted for the password associated with the username.
+
+### Command line option description
+
+| Option | Description |
+|---|---|
+| `--verbose` | Enables verbose logging of script operation |
+| `--config` | Configuration file that store the API host URL, Cognito pool id, and Cognito client id to authenticate and 
+| `--username` | Username for the API authentication.
+| `--input` | `.csv` or `.json` formatted data to load into the adsorption measurement API.
 
 ## Building the documentation
 

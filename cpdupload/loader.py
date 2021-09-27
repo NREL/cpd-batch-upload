@@ -14,7 +14,7 @@ class Loader:
     and attempt to upload it to the API.
     """
 
-    def __init__(self, input_filename: str, api: str):
+    def __init__(self, input_filename: str, api: str, token: str):
         """
         This constructor accepts an input filename as a parameter and checks to
         ensure the filename exists before any load operation happens.
@@ -26,6 +26,9 @@ class Loader:
 
         api: str
             The base URL of the CPD API server.
+
+        token: str
+            The bearer token to use for API authentication.
 
         Raises
         ------
@@ -39,10 +42,11 @@ class Loader:
             )
 
         self.input_filename = input_filename
+        self.token = token
         self.logger = logging.getLogger(__name__)
 
         try:
-            api_check = API(api)
+            api_check = API(api, token)
             api_check.health_check()
             self.api = api
         except APIException as e:
@@ -61,7 +65,7 @@ class Loader:
             upload to the API.
         """
         try:
-            api = API(self.api)
+            api = API(self.api, self.token)
 
             if self.input_filename.endswith(".csv"):
                 self.logger.info(f"Loading {self.input_filename} as a CSV.")
