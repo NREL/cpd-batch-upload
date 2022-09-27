@@ -18,7 +18,8 @@ Within the Cl adsorption folder, the periodic surface unit cell and coverage inf
 1.9 is the Coverage fraction (1/9), Ag is the Coverage per (Ag surface atom), and 3x3 is the surface unit cell size.
         
 Within this subdirectory are the unique converged adsorption sites direcroties. In this case,
-><span style="color:blue">4f_x/ ,b/
+><span style="color:blue">4f_x/
+><span style="color:blue">b/
         
 The "_x" indicates the most-stable adsorption energy.
 
