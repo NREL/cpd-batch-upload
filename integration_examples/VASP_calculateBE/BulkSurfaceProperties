@@ -1,0 +1,33 @@
+Ag #BulkFormula
+Ag #Element1
+1 #Sequence1
+1 #Coefficient1
+ #Element2
+ #Sequence2
+ #Coefficient2
+transition metal #Primary Class
+ #Secondary Class
+FALSE #IsStretched
+FALSE #IsCompressed
+Fm3m #Space Group
+4.074 #lattice constant, a, Angstrom
+ #lattice constant, b, Angstrom
+ #lattice constant, c, Angstrom
+ #NanoparticleSize_noAtoms
+ #Layer1_Name
+ #Layer1_Element1
+ #Layer1_Sequence1
+ #Layer1_Coefficient1
+ #Layer1_Element2
+ #Layer1_Sequence2
+ #Layer1_Coefficient2
+ #Layer2_Name
+ #Layer2_Element1
+ #Layer2_Sequence1
+ #Layer2_Coefficient1
+ #Layer2_Element2
+ #Layer2_Sequence2
+ #Layer2_Coefficient2
+"(100)" #Facet
+Ag #Termination
+3x3 #Cell Symmetry

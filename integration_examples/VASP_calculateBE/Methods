@@ -1,0 +1,7 @@
+VASP #Software
+PBE-D3 #Exchange-correlation functional
+projector augmented wave #Potentials
+plane wave #Basis set
+TRUE #Spin-polarized calculation
+FALSE #Zero-point energy corrected
+FALSE #Fixed Substrate
