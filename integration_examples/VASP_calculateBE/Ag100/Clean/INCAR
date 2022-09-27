@@ -1,0 +1,27 @@
+General:
+  SYSTEM  = CatImpurities
+  PREC    = Accurate
+  ALGO    = Fast
+  ENCUT   = 400
+  ISMEAR  = 0; SIGMA=0.1
+  IBRION  = 3
+  NSW     = 500
+  NELM    = 1000
+  EDIFFG  = -0.02
+  LWAVE   = .FALSE.
+  LCHARG  = .FALSE.
+  ISYM    = 2
+  NELMDL  = -5
+  LREAL   = Auto
+  NCORE   = 36
+Dipole:
+  IDIPOL  = 3
+  LDIPOL  = .TRUE.
+Optimizer:
+  IOPT    = 1
+  POTIM   = 0
+vdW:
+  IVDW    = 11
+Spin:
+  ISPIN   = 2
+  MAGMOM  = 36*0.0
