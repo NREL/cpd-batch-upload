@@ -6,7 +6,21 @@ To use the Compile_Upload_CPD_VASP.py script, users must set up subdirectories f
 
 ><span style="color:blue">Ag100/
 
-While the 
+Inside this parent directory are directories for the Cl adsorption calculation:
+><span style="color:blue">Cl_1_Cl/
+
+and the clean-surface calculation:
+><span style="color:blue">Clean/
+        
+Within the Cl adsorption folder, the periodic surface unit cell and coverage information for the calculation is provided in the following format:
+><span style="color:blue">1.9_Ag_3x3
+        
+1.9 is the Coverage fraction (1/9), Ag is the Coverage per (Ag surface atom), and 3x3 is the surface unit cell size.
+        
+Within this subdirectory are the unique converged adsorption sites direcroties. In this case,
+><span style="color:blue">4f_x/ b/
+        
+The "_x" indicates the most-stable adsorption energy.
 
 # Required files
 ### VASP Files
