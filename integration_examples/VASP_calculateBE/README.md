@@ -1,8 +1,8 @@
 # Overview
-<div style="text-align: justify">For a single metal surface/cluster, the Compile_Upload_CPD_VAPS.py python script allows users to calculate binding energies directly from VASP output files and compile all of the data into a .csv that can be uploaded to the CPD.
+<div style="text-align: justify">For a single metal surface/cluster, the Compile_Upload_CPD_VAPS.py python script allows users to calculate binding energies directly from VASP output files and compile all of the data into a .csv that can be uploaded to the CPD. Modifications will be necessary if ZPE corrections are added to the calculation to account for these values in the adsorption energy calculation.
 
 # Required Subdirectory Structure
-To use the Compile_Upload_CPD_VASP.py script, users must set up subdirectories for the adsorption calculations in a particular format. All calculations that the user seeks to upload to the CPD must be placed in the same parent directory, and each folder must correspond to an adsorbate species and be named in the format: <span style="color:blue">{Adsorbate}_{RefCoefficient}_{}</span>. In its current form, the script only handles a single reference species for the adsorption energy calculation, but simple modifications to the script can be made to allow it to handle multiple reference species. In this example, Cl adsorption was calculated on Ag(100). The parent directory is:
+To use the Compile_Upload_CPD_VASP.py script, users must set up subdirectories for the adsorption calculations in a particular format. All calculations that the user seeks to upload to the CPD must be placed in the same parent directory, and each folder must correspond to an adsorbate species and be named in the format: <span style="color:blue">{Adsorbate}_{RefCoefficient}_{RefSpecies}</span>. In its current form, the script only handles a single reference species for the adsorption energy calculation, but simple modifications to the script can be made to allow it to handle multiple reference species. In this example, Cl adsorption was calculated on Ag(100). The parent directory is:
 
 ><span style="color:blue">Ag100/
 
@@ -24,24 +24,20 @@ The "_x" indicates the most-stable adsorption energy.
 
 # Required files
 ### VASP Files
-To use this script, the OSZICAR must be present in each subdirectory. Also, if zero-point energy (ZPE) corrections were included in the calculation (ZPE="TRUE" in line 49 of the provided upload_VASP_CPD.py file), an additional file titled "zpe" must be included in the subdirectory, which contains the ZPE value in eV.
+To use this script, the OSZICAR for the converged calculations must be present both the Clean/ subdirectory, as well as in each adsorption site subdirectory. In addition, the directory path containing the gas-phase energies should be provided in the Compile_Upload_CPD_VASP.py file (line 10). The directory containing the gas-phase energy calculation must have the same name as {RefSpecies} in the adsorbate subdirectory, and should contain the corresponding OSZICAR file.
 
-### CSV Template
-To populate the provided template CSV file (DatabaseUpload_BlankTemplate.csv), users should copy the file to the parent directory. The path to this CSV file must be specified in line 165 of the providedupload_VASP_CPD.py file.
+### CSV file
+The path must be set in Compile_Upload_CPD_VASP.py for writing the .csv file (line 152)
 
-# Manual Entries
-In the current version of the upload_VASP_CPD.py script, only the total energy and ZPE from the adsorption calculation are extracted. All other entries must be manually entered. Also, reference species information will need to be added/changed in the script (lines 60-115) to account for additional reference species and to mark which reference species are associated with each adsorbate. If multiple reference species are used for a particular adsorbate, then the information for each reference species has to be provided in the associated if/elif statement.
+# Supplementary Files
+To compile the species data for both the adsorbate and reference species, the Species_Dictionary.py file should be placed in the same directory as the Compile_Upload_CPD_VASP.py file. If the species studied is not currently within the Species_Dictionary.py file, the user should add this information.
+        
+Within the parent directory (here, Ag100/), three files should be present:
+><span style="color:green">BulkSurfaceProperties, Metadata, and Methods
 
+These files contain all of the data pertaining to the surface/cluster material, the metadata associated with the calculation, and the methods used to perform the calculation. See https://cpd.chemcatbio.org/parameter-guide for more information.
+        
 # Running the script
-To run the upload_VASP_CPD.py script, run a for loop over all subdirectories where the upload_VASP_CPD script is run in each subdirectory. An example for a bash shell workflow is provided below.
-
-        cdir=$PWD #Set path to parent directory
-        for name in */; do #For loop over all subdirectories  
-            cd $name #change directory to subdirectory  
-            upload_VASP_CPD.py #Run python script
-            cd $cdir #change directory back to parent directory
-        done #end for loop
-    
-Running this for loop will append a row of data for each subdirectory to the blank Database_empty_template.csv file. This populated Database_empty_template.csv file can then be uploaded to the CPD (see **NREL/cpd-batch-upload/cpdupload** folder).
+To run the Compile_Upload_CPD_VASP.py script, simply cd into the parent directory (here Ag100/) and run the Compile_Upload_CPD_VASP.py script. Running this script will create the .csv file and populate the required entries. This populated Database_empty_template.csv file can then be uploaded to the CPD (see **NREL/cpd-batch-upload/cpdupload** folder).
 
 </div>
