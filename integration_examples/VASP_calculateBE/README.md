@@ -24,7 +24,7 @@ The "_x" indicates the most-stable adsorption energy.
 
 # Required files
 ### VASP Files
-To use this script, the OSZICAR for the converged calculations must be present both the Clean/ subdirectory, as well as in each adsorption site subdirectory. In addition, the directory path containing the gas-phase energies should be provided in the Compile_Upload_CPD_VASP.py file (line 10). The directory containing the gas-phase energy calculation must have the same name as {RefSpecies} in the adsorbate subdirectory, and should contain the corresponding OSZICAR file.
+To use this script, the OSZICAR for the converged calculations must be present in the Clean/ subdirectory, as well as in each adsorption site subdirectory. In addition, the directory path containing the gas-phase energies should be provided in the Compile_Upload_CPD_VASP.py file (line 10). The directory containing the gas-phase energy calculation must have the same name as {RefSpecies} in the adsorbate subdirectory, and should contain the corresponding OSZICAR file.
 
 ### CSV file
 The path must be set in Compile_Upload_CPD_VASP.py for writing the .csv file (line 152)
